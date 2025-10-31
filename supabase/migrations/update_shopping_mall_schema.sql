@@ -4,7 +4,7 @@
 -- ### Description: This migration file sets up the initial database  ###
 -- ### schema for the MVP based on the provided PRD. It includes    ###
 -- ### tables for products, custom orders, marketplace orders,      ###
--- ### user profiles, reviews, Q&A, and more.                       ###
+-- ### user data, reviews, Q&A, and more.                       ###
 -- ### Author: Gemini                                               ###
 -- ### Version: 1.0.0                                               ###
 -- ####################################################################
@@ -64,24 +64,24 @@ $$ LANGUAGE plpgsql;
 
 
 -- ====================================================================
--- 3. TABLE: PROFILES
+-- 3. TABLE: USERS
 -- ====================================================================
 -- Stores application-specific user data, linked to Clerk users.
 -- This table is separate from Clerk's auth.users table.
-CREATE TABLE public.profiles (
+CREATE TABLE public.users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     clerk_id TEXT NOT NULL UNIQUE,
     email TEXT,
-    full_name TEXT,
+    name TEXT,
     shipping_address TEXT,
     phone_number TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Trigger for profiles updated_at
-CREATE TRIGGER on_profiles_updated
-    BEFORE UPDATE ON public.profiles
+-- Trigger for users updated_at
+CREATE TRIGGER on_users_updated
+    BEFORE UPDATE ON public.users
     FOR EACH ROW EXECUTE PROCEDURE public.handle_updated_at();
 
 
@@ -133,7 +133,7 @@ CREATE TRIGGER on_products_updated
 -- Manages custom figure creation requests from users.
 CREATE TABLE public.custom_orders (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    clerk_id TEXT NOT NULL REFERENCES public.profiles(clerk_id) ON DELETE RESTRICT,
+    clerk_id TEXT NOT NULL REFERENCES public.users(clerk_id) ON DELETE RESTRICT,
     -- User-uploaded 2D image
     source_image_url TEXT NOT NULL,
     -- AI-generated or artist-refined 3D model
@@ -164,7 +164,7 @@ CREATE TRIGGER on_custom_orders_updated
 -- Stores items a user has added to their shopping cart for marketplace products.
 CREATE TABLE public.cart_items (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    clerk_id TEXT NOT NULL REFERENCES public.profiles(clerk_id) ON DELETE CASCADE,
+    clerk_id TEXT NOT NULL REFERENCES public.users(clerk_id) ON DELETE CASCADE,
     product_id UUID NOT NULL REFERENCES public.products(id) ON DELETE CASCADE,
     quantity INT NOT NULL DEFAULT 1 CHECK (quantity > 0),
     with_painting BOOLEAN NOT NULL DEFAULT FALSE,
@@ -180,7 +180,7 @@ CREATE TABLE public.cart_items (
 -- Header table for marketplace product purchases.
 CREATE TABLE public.orders (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    clerk_id TEXT NOT NULL REFERENCES public.profiles(clerk_id) ON DELETE RESTRICT,
+    clerk_id TEXT NOT NULL REFERENCES public.users(clerk_id) ON DELETE RESTRICT,
     total_amount NUMERIC(10, 2) NOT NULL CHECK (total_amount >= 0),
     status public.order_status NOT NULL DEFAULT 'payment_pending',
     shipping_address TEXT NOT NULL,
@@ -220,7 +220,7 @@ CREATE TABLE public.order_items (
 -- User reviews for purchased marketplace products.
 CREATE TABLE public.reviews (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    clerk_id TEXT NOT NULL REFERENCES public.profiles(clerk_id) ON DELETE CASCADE,
+    clerk_id TEXT NOT NULL REFERENCES public.users(clerk_id) ON DELETE CASCADE,
     product_id UUID NOT NULL REFERENCES public.products(id) ON DELETE CASCADE,
     order_item_id UUID UNIQUE REFERENCES public.order_items(id), -- A review can only be written for a purchased item
     rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
@@ -244,7 +244,7 @@ CREATE TABLE public.qna (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     product_id UUID NOT NULL REFERENCES public.products(id) ON DELETE CASCADE,
     -- Question fields
-    questioner_clerk_id TEXT NOT NULL REFERENCES public.profiles(clerk_id) ON DELETE CASCADE,
+    questioner_clerk_id TEXT NOT NULL REFERENCES public.users(clerk_id) ON DELETE CASCADE,
     question TEXT NOT NULL,
     questioned_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     -- Answer fields (nullable)
@@ -258,7 +258,7 @@ CREATE TABLE public.qna (
 -- 12. INDEXES FOR PERFORMANCE
 -- ====================================================================
 -- Create indexes on foreign keys and frequently queried columns.
-CREATE INDEX idx_profiles_clerk_id ON public.profiles(clerk_id);
+CREATE INDEX idx_users_clerk_id ON public.users(clerk_id);
 CREATE INDEX idx_products_category_id ON public.products(category_id);
 CREATE INDEX idx_custom_orders_clerk_id ON public.custom_orders(clerk_id);
 CREATE INDEX idx_custom_orders_status ON public.custom_orders(status);
@@ -275,7 +275,7 @@ CREATE INDEX idx_qna_product_id ON public.qna(product_id);
 -- ====================================================================
 -- In a real project, you would enable RLS and define policies.
 -- For this MVP spec, RLS is explicitly disabled.
-ALTER TABLE public.profiles DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.users DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.categories DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.products DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.custom_orders DISABLE ROW LEVEL SECURITY;
@@ -323,14 +323,14 @@ INSERT INTO public.products (name, description, price, base_price, painting_pric
 ('Naruto Sage Mode', 'Naruto in his powerful Sage Mode.', 135.00, 85.00, 50.00, 9, '{"https://example.com/img/naruto_sage_1.jpg"}', (SELECT id FROM categories WHERE name = 'Anime')),
 ('Dwarf Blacksmith', 'A stout dwarf forging a weapon at his anvil.', 95.00, 60.00, 35.00, 14, '{"https://example.com/img/dwarf_smith_1.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character'));
 
--- NOTE: Seeding data for profiles, orders, etc., would require actual
+-- NOTE: Seeding data for users, orders, etc., would require actual
 -- clerk_id values. This should be done via a separate seeding script
 -- in your application code after users have been created.
 -- Example of how you would do it:
 /*
 -- 1. Create a user in your Clerk development instance, get their ID.
--- 2. Insert a profile for them.
-INSERT INTO public.profiles (clerk_id, email, full_name, shipping_address, phone_number) VALUES
+-- 2. Insert a user record for them.
+INSERT INTO public.users (clerk_id, email, name, shipping_address, phone_number) VALUES
 ('user_2dx...', 'testuser@example.com', 'Test User', '123 Sample St, Seoul, Korea', '010-1234-5678');
 
 -- 3. Create a custom order for that user.

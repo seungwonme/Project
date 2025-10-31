@@ -124,7 +124,7 @@ $$;
 ### Immutable Function for Better Optimization
 
 ```sql
-create or replace function my_schema.full_name(first_name text, last_name text)
+create or replace function my_schema.name(first_name text, last_name text)
 returns text
 language sql
 security invoker
