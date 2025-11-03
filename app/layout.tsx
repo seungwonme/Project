@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SaaS 템플릿",
-  description: "Next.js + Clerk + Supabase 보일러플레이트",
+  title: "나만의 피규어 제작 플랫폼",
+  description: "사진 한 장으로 세상에 하나뿐인 피규어를 만들어보세요. AI 기술과 전문 작가의 손길로 특별한 작품을 제작합니다.",
 };
 
 export default function RootLayout({

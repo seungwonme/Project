@@ -1,5 +1,4 @@
 import { createClerkSupabaseClient } from "@/lib/supabase/server";
-import Image from "next/image";
 
 /**
  * @file app/custom-order/[id]/confirmation/page.tsx

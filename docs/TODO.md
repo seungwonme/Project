@@ -44,27 +44,34 @@
 - [x] Server Action: 주문 취소 기능 (상태가 `pending_review` 또는 `quote_provided`일 때)
 
 ### Phase 3: 관리자 - 주문제작 관리 (1.5주)
-- [ ] 관리자 인증 미들웨어 구현
-  - [ ] Clerk의 조직(Organization) 또는 메타데이터로 관리자 권한 체크
-  - [ ] 관리자 전용 라우트 보호 (`/admin/*`)
-- [ ] 주문제작 관리 대시보드 (`app/admin/custom-orders/page.tsx`)
-  - [ ] 모든 주문 목록 조회 (상태별 탭)
-  - [ ] 주문서 상세 확인 모달
-  - [ ] 주문 상태 변경 (승인/반려/진행중/완료)
-  - [ ] 견적 금액 입력 및 제공 (`quote_provided` 상태로 변경)
-- [ ] Server Action: 관리자 주문 상태 업데이트 (`actions/admin/update-custom-order.ts`)
-- [ ] 완성 이미지 업로드 기능
-  - [ ] 제작 완료 시 완성품 이미지 업로드
-  - [ ] `completed_image_urls` 필드에 저장
+- [x] 관리자 인증 미들웨어 구현
+  - [x] Clerk의 조직(Organization) 또는 메타데이터로 관리자 권한 체크 (`publicMetadata.role === "admin"`)
+  - [x] 관리자 전용 라우트 보호 (`/admin/*`) (`middleware.ts`)
+- [x] 주문제작 관리 대시보드 (`app/admin/custom-orders/page.tsx`)
+  - [x] 모든 주문 목록 조회 (상태별 탭) (`components/admin/custom-order-table.tsx`)
+  - [x] 주문서 상세 확인 모달 (`components/admin/custom-order-detail-dialog.tsx`)
+  - [x] 주문 상태 변경 (승인/반려/진행중/완료)
+  - [x] 견적 금액 입력 및 제공 (`quote_provided` 상태로 변경)
+- [x] Server Action: 관리자 주문 상태 업데이트 (`actions/admin/update-custom-order.ts`)
+- [x] 완성 이미지 업로드 기능
+  - [x] 제작 완료 시 완성품 이미지 업로드 (최대 5장)
+  - [x] `completed_image_urls` 필드에 저장
 
 ### Phase 4: 마켓플레이스 - 상품 목록 & 상세 (1.5주)
 #### 4.1 홈페이지
-- [ ] 홈 페이지 UI 구현 (`app/page.tsx`)
-  - [ ] 히어로 섹션 (플랫폼 소개)
-  - [ ] 인기 상품 섹션 (조회수 또는 판매량 기준, 상위 6-8개)
-  - [ ] 카테고리별 추천 상품
-  - [ ] 주문제작 의뢰 CTA 버튼
-- [ ] Server Component: 인기 상품 데이터 페칭
+- [x] 홈 페이지 UI 구현 (`app/page.tsx`)
+  - [x] 히어로 섹션 (플랫폼 소개)
+  - [x] 인기 상품 섹션 (최신 상품 기준, 상위 6-8개)
+  - [x] 카테고리별 추천 상품 (주요 카테고리 + 더보기 기능)
+  - [x] 주문제작 의뢰 CTA 버튼
+- [x] Server Component: 인기 상품 데이터 페칭
+- [x] 타입 정의 생성 (`types/product.ts`)
+- [x] Server Actions 생성 (`actions/product.ts`)
+- [x] 재사용 컴포넌트 생성
+  - [x] ProductCard 컴포넌트
+  - [x] CategorySection 컴포넌트
+- [x] Navbar 업데이트 (브랜드명 및 네비게이션)
+- [x] 메타데이터 업데이트
 
 #### 4.2 상품 목록 페이지
 - [ ] 상품 목록 페이지 (`app/products/page.tsx`)

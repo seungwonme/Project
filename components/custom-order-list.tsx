@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import type { CustomOrder, CustomOrderStatus } from "@/types/custom-order";
 import { ORDER_STATUS_LABEL, isCancellable } from "@/types/custom-order";
 import { Button } from "@/components/ui/button";
