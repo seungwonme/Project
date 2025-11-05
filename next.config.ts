@@ -3,8 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      { 
-        hostname: "img.clerk.com" 
+      {
+        hostname: "img.clerk.com"
       },
       {
         // Supabase Storage
@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
       },
     ],
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
   },
 };
 

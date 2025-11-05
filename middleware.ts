@@ -9,7 +9,8 @@ export default clerkMiddleware(async (auth, req) => {
   let isAdmin = false;
   if (isAdminRoute && userId) {
     try {
-      const user = await (await clerkClient()).users.getUser(userId);
+      const client = await clerkClient();
+      const user = await client.users.getUser(userId);
       isAdmin = user.privateMetadata?.role === "admin";
     } catch (error) {
       console.error("❌ Failed to fetch user:", error);
