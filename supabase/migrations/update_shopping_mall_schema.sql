@@ -300,28 +300,28 @@ INSERT INTO public.categories (name, description) VALUES
 ('Props', 'Replicas of items from movies, games, and more.'),
 ('Mecha', 'Robots and mechanical suits.');
 
--- Seed Products (20 samples)
-INSERT INTO public.products (name, description, price, base_price, painting_price, stock_quantity, image_urls, category_id) VALUES
-('Cyberpunk Samurai', 'A futuristic samurai warrior with neon katana. High-detail resin print.', 120.00, 75.00, 45.00, 10, '{"https://example.com/img/cyber_samurai_1.jpg", "https://example.com/img/cyber_samurai_2.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character')),
-('Chibi Dragon', 'A cute, small dragon in a playful pose. Perfect for desks.', 45.00, 25.00, 20.00, 30, '{"https://example.com/img/chibi_dragon_1.jpg"}', (SELECT id FROM categories WHERE name = 'Creature')),
-('Space Marine Bust', 'A detailed bust of a famous sci-fi space marine.', 80.00, 50.00, 30.00, 15, '{"https://example.com/img/space_marine_1.jpg"}', (SELECT id FROM categories WHERE name = 'Gaming')),
-('Forest Spirit', 'A mystical creature of the woods, entwined with vines.', 95.00, 60.00, 35.00, 8, '{"https://example.com/img/forest_spirit_1.jpg"}', (SELECT id FROM categories WHERE name = 'Creature')),
-('Anime Witch Apprentice', 'A young witch learning her craft, with a spellbook and cat.', 110.00, 65.00, 45.00, 12, '{"https://example.com/img/anime_witch_1.jpg"}', (SELECT id FROM categories WHERE name = 'Anime')),
-('Gundam RX-78 Head', 'A 1:35 scale head of the classic Gundam mobile suit.', 150.00, 100.00, 50.00, 5, '{"https://example.com/img/gundam_head_1.jpg"}', (SELECT id FROM categories WHERE name = 'Mecha')),
-('Fantasy Knight', 'A valiant knight in full plate armor, holding a greatsword.', 130.00, 80.00, 50.00, 11, '{"https://example.com/img/fantasy_knight_1.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character')),
-('Steampunk Inventor', 'An inventor with goggles, gears, and a quirky robotic arm.', 115.00, 70.00, 45.00, 9, '{"https://example.com/img/steampunk_inventor_1.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character')),
-('Doom Slayer Helmet', 'A wearable replica of the iconic helmet from DOOM.', 250.00, 180.00, 70.00, 3, '{"https://example.com/img/doom_helmet_1.jpg"}', (SELECT id FROM categories WHERE name = 'Props')),
-('Zelda Master Sword', 'A miniature replica of the Master Sword in its pedestal.', 65.00, 40.00, 25.00, 25, '{"https://example.com/img/master_sword_1.jpg"}', (SELECT id FROM categories WHERE name = 'Props')),
-('Cthulhu Idol', 'A mysterious idol depicting the cosmic entity Cthulhu.', 75.00, 50.00, 25.00, 18, '{"https://example.com/img/cthulhu_idol_1.jpg"}', (SELECT id FROM categories WHERE name = 'Creature')),
-('Final Fantasy Red Mage', 'A stylish Red Mage character, casting a spell.', 125.00, 75.00, 50.00, 7, '{"https://example.com/img/red_mage_1.jpg"}', (SELECT id FROM categories WHERE name = 'Gaming')),
-('My Neighbor Totoro Diorama', 'A lovely diorama of Totoro at the bus stop.', 180.00, 110.00, 70.00, 6, '{"https://example.com/img/totoro_diorama_1.jpg"}', (SELECT id FROM categories WHERE name = 'Diorama')),
-('Evangelion Unit-01', 'A dynamic pose of the iconic EVA Unit-01.', 220.00, 150.00, 70.00, 4, '{"https://example.com/img/eva_01_1.jpg"}', (SELECT id FROM categories WHERE name = 'Mecha')),
-('Street Fighter Ryu', 'Ryu in his classic Hadoken pose.', 100.00, 60.00, 40.00, 20, '{"https://example.com/img/ryu_1.jpg"}', (SELECT id FROM categories WHERE name = 'Gaming')),
-('Sailor Moon Wand', 'A 1:1 replica of Sailor Moon''s Moon Stick.', 90.00, 55.00, 35.00, 13, '{"https://example.com/img/moon_stick_1.jpg"}', (SELECT id FROM categories WHERE name = 'Props')),
-('Post-Apocalyptic Survivor', 'A gritty survivor navigating a ruined world.', 105.00, 65.00, 40.00, 10, '{"https://example.com/img/survivor_1.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character')),
-('Cyberpunk Alley Diorama', 'A detailed, neon-lit alleyway scene for figures.', 200.00, 140.00, 60.00, 5, '{"https://example.com/img/cyber_alley_1.jpg"}', (SELECT id FROM categories WHERE name = 'Diorama')),
-('Naruto Sage Mode', 'Naruto in his powerful Sage Mode.', 135.00, 85.00, 50.00, 9, '{"https://example.com/img/naruto_sage_1.jpg"}', (SELECT id FROM categories WHERE name = 'Anime')),
-('Dwarf Blacksmith', 'A stout dwarf forging a weapon at his anvil.', 95.00, 60.00, 35.00, 14, '{"https://example.com/img/dwarf_smith_1.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character'));
+-- Seed Products (20 samples) - DISABLED (나중에 실제 이미지로 교체 예정)
+-- INSERT INTO public.products (name, description, price, base_price, painting_price, stock_quantity, image_urls, category_id) VALUES
+-- ('Cyberpunk Samurai', 'A futuristic samurai warrior with neon katana. High-detail resin print.', 120.00, 75.00, 45.00, 10, '{"https://example.com/img/cyber_samurai_1.jpg", "https://example.com/img/cyber_samurai_2.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character')),
+-- ('Chibi Dragon', 'A cute, small dragon in a playful pose. Perfect for desks.', 45.00, 25.00, 20.00, 30, '{"https://example.com/img/chibi_dragon_1.jpg"}', (SELECT id FROM categories WHERE name = 'Creature')),
+-- ('Space Marine Bust', 'A detailed bust of a famous sci-fi space marine.', 80.00, 50.00, 30.00, 15, '{"https://example.com/img/space_marine_1.jpg"}', (SELECT id FROM categories WHERE name = 'Gaming')),
+-- ('Forest Spirit', 'A mystical creature of the woods, entwined with vines.', 95.00, 60.00, 35.00, 8, '{"https://example.com/img/forest_spirit_1.jpg"}', (SELECT id FROM categories WHERE name = 'Creature')),
+-- ('Anime Witch Apprentice', 'A young witch learning her craft, with a spellbook and cat.', 110.00, 65.00, 45.00, 12, '{"https://example.com/img/anime_witch_1.jpg"}', (SELECT id FROM categories WHERE name = 'Anime')),
+-- ('Gundam RX-78 Head', 'A 1:35 scale head of the classic Gundam mobile suit.', 150.00, 100.00, 50.00, 5, '{"https://example.com/img/gundam_head_1.jpg"}', (SELECT id FROM categories WHERE name = 'Mecha')),
+-- ('Fantasy Knight', 'A valiant knight in full plate armor, holding a greatsword.', 130.00, 80.00, 50.00, 11, '{"https://example.com/img/fantasy_knight_1.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character')),
+-- ('Steampunk Inventor', 'An inventor with goggles, gears, and a quirky robotic arm.', 115.00, 70.00, 45.00, 9, '{"https://example.com/img/steampunk_inventor_1.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character')),
+-- ('Doom Slayer Helmet', 'A wearable replica of the iconic helmet from DOOM.', 250.00, 180.00, 70.00, 3, '{"https://example.com/img/doom_helmet_1.jpg"}', (SELECT id FROM categories WHERE name = 'Props')),
+-- ('Zelda Master Sword', 'A miniature replica of the Master Sword in its pedestal.', 65.00, 40.00, 25.00, 25, '{"https://example.com/img/master_sword_1.jpg"}', (SELECT id FROM categories WHERE name = 'Props')),
+-- ('Cthulhu Idol', 'A mysterious idol depicting the cosmic entity Cthulhu.', 75.00, 50.00, 25.00, 18, '{"https://example.com/img/cthulhu_idol_1.jpg"}', (SELECT id FROM categories WHERE name = 'Creature')),
+-- ('Final Fantasy Red Mage', 'A stylish Red Mage character, casting a spell.', 125.00, 75.00, 50.00, 7, '{"https://example.com/img/red_mage_1.jpg"}', (SELECT id FROM categories WHERE name = 'Gaming')),
+-- ('My Neighbor Totoro Diorama', 'A lovely diorama of Totoro at the bus stop.', 180.00, 110.00, 70.00, 6, '{"https://example.com/img/totoro_diorama_1.jpg"}', (SELECT id FROM categories WHERE name = 'Diorama')),
+-- ('Evangelion Unit-01', 'A dynamic pose of the iconic EVA Unit-01.', 220.00, 150.00, 70.00, 4, '{"https://example.com/img/eva_01_1.jpg"}', (SELECT id FROM categories WHERE name = 'Mecha')),
+-- ('Street Fighter Ryu', 'Ryu in his classic Hadoken pose.', 100.00, 60.00, 40.00, 20, '{"https://example.com/img/ryu_1.jpg"}', (SELECT id FROM categories WHERE name = 'Gaming')),
+-- ('Sailor Moon Wand', 'A 1:1 replica of Sailor Moon''s Moon Stick.', 90.00, 55.00, 35.00, 13, '{"https://example.com/img/moon_stick_1.jpg"}', (SELECT id FROM categories WHERE name = 'Props')),
+-- ('Post-Apocalyptic Survivor', 'A gritty survivor navigating a ruined world.', 105.00, 65.00, 40.00, 10, '{"https://example.com/img/survivor_1.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character')),
+-- ('Cyberpunk Alley Diorama', 'A detailed, neon-lit alleyway scene for figures.', 200.00, 140.00, 60.00, 5, '{"https://example.com/img/cyber_alley_1.jpg"}', (SELECT id FROM categories WHERE name = 'Diorama')),
+-- ('Naruto Sage Mode', 'Naruto in his powerful Sage Mode.', 135.00, 85.00, 50.00, 9, '{"https://example.com/img/naruto_sage_1.jpg"}', (SELECT id FROM categories WHERE name = 'Anime')),
+-- ('Dwarf Blacksmith', 'A stout dwarf forging a weapon at his anvil.', 95.00, 60.00, 35.00, 14, '{"https://example.com/img/dwarf_smith_1.jpg"}', (SELECT id FROM categories WHERE name = 'Original Character'));
 
 -- NOTE: Seeding data for users, orders, etc., would require actual
 -- clerk_id values. This should be done via a separate seeding script

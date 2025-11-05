@@ -14,13 +14,28 @@ export async function POST() {
   try {
     // Clerk 인증 확인
     console.log("1️⃣ Checking Clerk authentication...");
-    const { userId } = await auth();
-    console.log("   userId:", userId);
+    let userId: string | null = null;
+    
+    try {
+      const authObj = await auth();
+      userId = authObj.userId;
+      console.log("   userId:", userId);
+    } catch (error) {
+      console.error("❌ Auth error:", error);
+      console.groupEnd();
+      return NextResponse.json(
+        { error: "Unauthorized", details: "Authentication failed" },
+        { status: 401 }
+      );
+    }
 
     if (!userId) {
       console.error("❌ No userId found - Unauthorized");
       console.groupEnd();
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Unauthorized", details: "No user ID found" },
+        { status: 401 }
+      );
     }
 
     // Clerk에서 사용자 정보 가져오기

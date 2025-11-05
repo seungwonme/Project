@@ -19,6 +19,8 @@
  * - @/types/product: 상품 타입
  */
 
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -39,10 +41,17 @@ interface ProductCardProps {
  */
 export function ProductCard({
   product,
-  fallbackImage = "/placeholder-product.png",
+  fallbackImage = "/logo.png", // 기본 로고 이미지 사용
 }: ProductCardProps) {
   // 첫 번째 이미지 URL 추출
-  const imageUrl = product.image_urls?.[0] || fallbackImage;
+  const rawImageUrl = product.image_urls?.[0];
+  
+  // example.com 또는 유효하지 않은 URL인 경우 대체 이미지 사용
+  const imageUrl = rawImageUrl && 
+    !rawImageUrl.includes('example.com') && 
+    rawImageUrl.startsWith('http')
+    ? rawImageUrl 
+    : fallbackImage;
 
   // 카테고리 한글 레이블
   const categoryLabel = product.category

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export default clerkMiddleware(async (auth, req) => {
   const { userId, sessionClaims } = await auth();
-  const isAdmin = (sessionClaims as any)?.publicMetadata?.role === "admin";
+  const isAdmin = (sessionClaims as any)?.privateMetadata?.role === "admin";
   const isAdminRoute = req.nextUrl.pathname.startsWith("/admin");
 
   console.log("🔐 Middleware Check:", {

@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
  * @file lib/auth/is-admin.ts
  * @description 서버 사이드에서 관리자 권한 확인 유틸리티
  * 
- * Clerk publicMetadata.role === "admin" 체크
+ * Clerk privateMetadata.role === "admin" 체크
  */
 
 /**
@@ -15,7 +15,7 @@ export async function isAdmin(): Promise<boolean> {
   
   if (!userId) return false;
   
-  const role = (sessionClaims as any)?.publicMetadata?.role;
+  const role = (sessionClaims as any)?.privateMetadata?.role;
   return role === "admin";
 }
 
@@ -27,7 +27,7 @@ export async function assertAdminOrThrow(): Promise<void> {
   console.group("🔐 assertAdminOrThrow");
   
   const { userId, sessionClaims } = await auth();
-  const role = (sessionClaims as any)?.publicMetadata?.role;
+  const role = (sessionClaims as any)?.privateMetadata?.role;
   
   console.log("userId:", userId);
   console.log("role:", role);
