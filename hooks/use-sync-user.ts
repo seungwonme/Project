@@ -22,7 +22,7 @@ import { useEffect, useRef } from "react";
  * ```
  */
 export function useSyncUser() {
-  const { isLoaded, userId } = useAuth();
+  const { isLoaded, userId, getToken } = useAuth();
   const syncedRef = useRef(false);
 
   useEffect(() => {
@@ -52,8 +52,25 @@ export function useSyncUser() {
     const syncUser = async () => {
       console.log("🚀 Starting user sync...");
       try {
+        const token = await getToken().catch((error) => {
+          console.error("❌ Failed to retrieve Clerk token:", error);
+          return null;
+        });
+
+        console.log("🔑 Clerk token status:", token ? `${token.slice(0, 10)}…` : "null");
+
+        if (!token) {
+          console.error("❌ No token returned from Clerk, aborting sync");
+          return;
+        }
+
         const response = await fetch("/api/sync-user", {
           method: "POST",
+          credentials: "include", // 쿠키 포함
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         if (!response.ok) {
@@ -71,5 +88,5 @@ export function useSyncUser() {
     };
 
     syncUser();
-  }, [isLoaded, userId]);
+  }, [getToken, isLoaded, userId]);
 }

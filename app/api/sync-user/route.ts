@@ -1,5 +1,5 @@
-import { auth, clerkClient } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import { auth, clerkClient, getAuth } from "@clerk/nextjs/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServiceRoleClient } from "@/lib/supabase/service-role";
 
 /**
@@ -8,20 +8,38 @@ import { getServiceRoleClient } from "@/lib/supabase/service-role";
  * 클라이언트에서 로그인 후 이 API를 호출하여 사용자 정보를 Supabase에 저장합니다.
  * 이미 존재하는 경우 업데이트하고, 없으면 새로 생성합니다.
  */
-export async function POST() {
+export async function POST(request: NextRequest) {
   console.group("🔐 API: /api/sync-user");
+  
+  // 디버깅: 쿠키 확인
+  const cookies = request.cookies.getAll();
+  console.log("🍪 Cookies received:", cookies.map(c => c.name).join(", "));
 
   try {
     // Clerk 인증 확인
     console.log("1️⃣ Checking Clerk authentication...");
     let userId: string | null = null;
-    
+    let sessionClaims: Record<string, unknown> | null = null;
+
     try {
-      const authObj = await auth();
-      userId = authObj.userId;
+      // Route Handler에서는 getAuth(request) 사용이 가장 안정적 (Context7 Quickstart와 일치)
+      const authFromRequest = getAuth(request);
+      userId = authFromRequest.userId;
+      sessionClaims = authFromRequest.sessionClaims as Record<string, unknown> | null;
+
       console.log("   userId:", userId);
+      console.log("   sessionClaims:", sessionClaims);
+
+      // fallback: auth()로도 재확인 (middleware context 이슈 대비)
+      if (!userId) {
+        const authObj = await auth();
+        userId = authObj.userId;
+        sessionClaims = authObj.sessionClaims as Record<string, unknown> | null;
+        console.log("   fallback auth().userId:", userId);
+      }
     } catch (error) {
       console.error("❌ Auth error:", error);
+      console.error("   Error details:", error instanceof Error ? error.message : String(error));
       console.groupEnd();
       return NextResponse.json(
         { error: "Unauthorized", details: "Authentication failed" },
@@ -30,7 +48,11 @@ export async function POST() {
     }
 
     if (!userId) {
-      console.error("❌ No userId found - Unauthorized");
+      const authHeader = request.headers.get("authorization");
+      console.error("❌ No userId found - Unauthorized", {
+        hasAuthorizationHeader: Boolean(authHeader),
+        authorizationPreview: authHeader ? `${authHeader.slice(0, 16)}…` : null,
+      });
       console.groupEnd();
       return NextResponse.json(
         { error: "Unauthorized", details: "No user ID found" },

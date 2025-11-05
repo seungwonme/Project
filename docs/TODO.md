@@ -45,7 +45,7 @@
 
 ### Phase 3: 관리자 - 주문제작 관리 (1.5주)
 - [x] 관리자 인증 미들웨어 구현
-  - [x] Clerk의 조직(Organization) 또는 메타데이터로 관리자 권한 체크 (`publicMetadata.role === "admin"`)
+  - [x] Clerk의 조직(Organization) 또는 메타데이터로 관리자 권한 체크 (`privateMetadata.role === "admin"`)
   - [x] 관리자 전용 라우트 보호 (`/admin/*`) (`middleware.ts`)
 - [x] 주문제작 관리 대시보드 (`app/admin/custom-orders/page.tsx`)
   - [x] 모든 주문 목록 조회 (상태별 탭) (`components/admin/custom-order-table.tsx`)

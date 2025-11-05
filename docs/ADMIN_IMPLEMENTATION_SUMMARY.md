@@ -8,7 +8,7 @@
 ### 1. 관리자 권한 보호 시스템
 
 #### 미들웨어 (`middleware.ts`)
-- Clerk `publicMetadata.role === "admin"` 체크
+- Clerk `privateMetadata.role === "admin"` 체크
 - `/admin/*` 라우트 자동 보호
 - 비관리자 접근 시 홈으로 리다이렉트
 - 로깅: 모든 접근 시도 콘솔 기록
@@ -165,7 +165,7 @@ products/{productId}/images/{i}_{filename}
 1. Clerk Dashboard 접속
 2. Users 메뉴에서 관리자로 지정할 사용자 선택
 3. Metadata 탭 선택
-4. Public Metadata에 추가:
+4. **Private Metadata**에 추가 (⚠️ Public이 아닌 Private입니다):
 ```json
 {
   "role": "admin"
